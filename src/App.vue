@@ -1,29 +1,39 @@
 <template>
-    <div id="nav"></div>
-    <transition mode="in-out" name="mode-fade">
-        <p v-if="show">demo</p>
-        <p v-else>hide</p>
-    </transition>
-
-    <button @click="changeShow">显示demo</button>
+    <div ref="el">{{ name }}</div>
+    <div>{{ newObj }}</div>
+    <HelloWorld />
 </template>
 <script>
-import { ref } from '@vue/reactivity';
+import { ref, toRef, onMounted, provide } from 'vue';
+import { createDialog } from './views/show';
+import HelloWorld from './components/HelloWorld';
+
 export default {
     setup() {
-        let show = ref(true);
-        let showA = ref('a');
-        function changeShow() {
-            show.value = !show.value;
-            console.log(show.value);
-        }
+        const name = ref('name');
+        const obj = {
+            name: 'name',
+            age: 12,
+        };
+        const el = ref(null);
+        const newObj = toRef(obj, 'age');
+        // const instance = getCurrentInstance();
+
+        onMounted(() => {
+            el.value.innerHTML = '文案被修改';
+        });
+
+        provide('dialog', createDialog);
         return {
-            show,
-            changeShow,
-            showA,
+            name,
+            newObj,
+            obj,
+            el,
         };
     },
-    components: {},
+    components: {
+        HelloWorld,
+    },
 };
 </script>
 <style lang="scss">
