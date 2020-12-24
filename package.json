@@ -5,19 +5,22 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "vue-cli-service lint --fix",
     "commit": "git cz"
   },
   "dependencies": {
+    "@sentry/tracing": "^5.29.2",
+    "@sentry/vue": "^5.29.2",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0-0",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vue": "^3.0.4",
+    "vue-router": "^4.0.1",
+    "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "@sentry/webpack-plugin": "^1.14.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-plugin-router": "~4.5.0",
@@ -28,13 +31,16 @@
     "compression-webpack-plugin": "^7.0.0",
     "eslint": "^7.15.0",
     "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-vue": "^7.0.0-0",
     "hard-source-webpack-plugin": "^0.13.1",
+    "html-webpack-tags-plugin": "^2.0.17",
     "husky": "^4.3.0",
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
+    "prettier-eslint": "^12.0.0",
     "sass": "^1.29.0",
     "sass-loader": "^10.1.0",
     "speed-measure-webpack-plugin": "^1.3.3",
@@ -52,14 +58,12 @@
     }
   },
   "lint-staged": {
+    "*.{less,scss}": [
+      "stylelint --config  ./.stylelintrc --fix"
+    ],
     "*.{js,vue}": [
       "npm run lint",
-      "prettier --write",
-      "git add"
-    ],
-    "*.{less,scss,vue}": [
-      "stylelint --config  ./.stylelintrc --fix",
-      "git add"
+      "prettier --write"
     ]
   }
 }
