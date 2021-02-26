@@ -43,7 +43,6 @@ export default {
     });
     return { img, lists };
   },
-  components: {},
 };
 </script>
 <style lang="scss" scoped>
