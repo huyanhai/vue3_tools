@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const os = require('os');
 const path = require('path');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const SentryPlugin = require('@sentry/webpack-plugin');
 const semver = require('semver');
 
 const IS_PROD = process.env.NODE_ENV === 'production';
@@ -32,7 +32,8 @@ module.exports = {
     },
     proxy: 'http://127.0.0.1:5000',
   },
-  // productionSourceMap: false,
+  publicPath: IS_PROD ? './' : '',
+  productionSourceMap: IS_PROD,
   configureWebpack: smp.wrap({
     module: {
       rules: [
@@ -98,22 +99,16 @@ module.exports = {
       // Sentry Source Map Upload Report
       config
         .plugin('sentry')
-        .use(SentryWebpackPlugin, [
+        .use(SentryPlugin, [
           {
-            // sentry-cli configuration
-            authToken: process.env.SENTRY_AUTH_TOKEN,
-            org: process.env.SENTRY_ORG,
-            project: process.env.SENTRY_PROJECT,
-
-            // webpack specific configuration
             include: './dist',
-            ignore: ['css', 'fonts', 'img'],
-            release: `${process.env.npm_package_name}@${process.env.npm_package_version}`,
-            urlPrefix: '/', // publicPath
+            release: 'release@0.0.1',
+            ignore: ['node_modules', 'vue.config.js'],
+            configFile: 'sentry.properties',
+            urlPrefix: '~/',
           },
         ])
         .end();
-
       // source-map files need to delete
       // todo del /dist/**/*.map
       // https://webpack.js.org/configuration/devtool/#devtool
