@@ -1,7 +1,0 @@
-[defaults]
-url = https://sentry.io/
-org = huyanhai
-project = vue_test
-
-[auth]
-token = 1930c4cf267a4d67b94689ce1678caca1d29d611067a428a98fc06bd26e1b3a2
