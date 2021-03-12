@@ -10,6 +10,8 @@ const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const SentryPlugin = require('@sentry/webpack-plugin');
 const semver = require('semver');
 
+const { version } = require('./package.json');
+
 const IS_PROD = process.env.NODE_ENV === 'production';
 const smp = new SpeedMeasurePlugin({
   disable: !IS_PROD,
@@ -83,6 +85,7 @@ module.exports = {
   },
   publicPath: IS_PROD ? './' : '',
   productionSourceMap: IS_PROD,
+  filenameHashing: false,
   configureWebpack: smp.wrap({
     module: {
       rules: [
@@ -109,10 +112,13 @@ module.exports = {
     },
     plugins: [
       IS_PROD && new HardSourceWebpackPlugin(),
-      IS_PROD && new BundleAnalyzerPlugin(),
+      IS_PROD &&
+        new BundleAnalyzerPlugin({
+          openAnalyzer: false,
+        }),
       IS_PROD &&
         new TerserPlugin({
-          // sourceMap: false,
+          sourceMap: true,
           terserOptions: {
             compress: {
               drop_console: true,
@@ -128,7 +134,6 @@ module.exports = {
         '@sentry/vue': 'Sentry',
         '@sentry/tracing': 'Sentry',
       });
-
       // add Sentry cdn links
       config
         .plugin('production-tags')
@@ -145,25 +150,19 @@ module.exports = {
           },
         ])
         .end();
-
       // Sentry Source Map Upload Report
       config
         .plugin('sentry')
         .use(SentryPlugin, [
           {
             include: './dist',
-            release: 'release@0.0.1',
+            release: `release@${version}`,
             ignore: ['node_modules', 'vue.config.js'],
             configFile: 'sentry.properties',
             urlPrefix: '~/',
           },
         ])
         .end();
-      // source-map files need to delete
-      // todo del /dist/**/*.map
-      // https://webpack.js.org/configuration/devtool/#devtool
-      config.devtool('hidden-source-map');
     });
-    /* eslint-enable */
   },
 };

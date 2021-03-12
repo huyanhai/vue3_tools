@@ -4,8 +4,6 @@ import axios from 'axios';
 
 let BASE_URL = process.env.VUE_APP_BASE_API;
 
-console.log('BASE_URL', BASE_URL);
-
 const instance = axios.create({
   baseURL: BASE_URL,
   timeout: 60000,
