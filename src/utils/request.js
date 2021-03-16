@@ -15,6 +15,7 @@ instance.interceptors.request.use(function (config) {
   return {
     ...config,
     headers: {
+      test_headers: 'test_headers',
       ...config.headers,
     },
     params: {
@@ -30,8 +31,24 @@ instance.interceptors.response.use(
     return rawResponse.data;
   },
   rawError => {
+    const {
+      data,
+      config: { headers, method, params },
+    } = rawError.response;
+    console.log(rawError.response);
     const errMsg = rawError.toString();
     const code = errMsg.substr(errMsg.indexOf('code') + 5);
+    window.$sentry.addBreadcrumb({
+      type: 'http',
+      category: 'api',
+      data: {
+        headers: headers,
+        method: method,
+        request: method === 'get' ? params : rawError.response.config?.data,
+        response: data,
+      },
+      timestamp: new Date().getTime(),
+    });
     return Promise.reject({
       code: code,
       message: errMsg,
