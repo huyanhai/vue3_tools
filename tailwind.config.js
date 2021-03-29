@@ -1,12 +1,12 @@
 module.exports = {
-  purge: [],
+  purge: false,
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
         'test-color': '#ff0000',
         'test-black': 'black',
-        'test-reds': 'red',
+        'test-red': 'red',
       },
       padding: {
         test: '10px',
