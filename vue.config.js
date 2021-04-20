@@ -7,10 +7,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 const cssnano = require('cssnano');
 const purgecss = require('@fullhuman/postcss-purgecss');
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
-const SentryPlugin = require('@sentry/webpack-plugin');
+// const SentryPlugin = require('@sentry/webpack-plugin');
 const semver = require('semver');
 
-const { version } = require('./package.json');
+// const { version } = require('./package.json');
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 const smp = new SpeedMeasurePlugin({
@@ -151,18 +151,18 @@ module.exports = {
         ])
         .end();
       // Sentry Source Map Upload Report
-      config
-        .plugin('sentry')
-        .use(SentryPlugin, [
-          {
-            include: './dist',
-            release: `release@${version}`,
-            ignore: ['node_modules', 'vue.config.js'],
-            configFile: 'sentry.properties',
-            urlPrefix: '~/',
-          },
-        ])
-        .end();
+      // config
+      //   .plugin('sentry')
+      //   .use(SentryPlugin, [
+      //     {
+      //       include: './dist',
+      //       release: `release@${version}`,
+      //       ignore: ['node_modules', 'vue.config.js'],
+      //       configFile: 'sentry.properties',
+      //       urlPrefix: '~/',
+      //     },
+      //   ])
+      //   .end();
     });
   },
 };
