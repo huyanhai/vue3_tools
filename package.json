@@ -11,8 +11,6 @@
     "commit": "git cz"
   },
   "dependencies": {
-    "@sentry/tracing": "^5.29.2",
-    "@sentry/vue": "^5.29.2",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "koa-log4": "^2.3.2",

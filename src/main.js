@@ -4,7 +4,6 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import 'tailwindcss/tailwind.css';
-import './utils/sentry';
 
 const app = createApp(App);
 
