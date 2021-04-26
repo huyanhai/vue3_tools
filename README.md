@@ -32,6 +32,6 @@ chore: 不修改src或者test的其余修改，例如构建过程或辅助工具
 git 提交工具 commitizen
 
 ```
-npm install -g commitizencommitizen
-init cz-conventional-changelog --save --save-exact
+npm install -g commitizen
+commitizen init cz-conventional-changelog --save --save-exact
 ```
