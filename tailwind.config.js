@@ -4,15 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'test-color': '#ff0000',
-        'test-black': 'black',
-        'test-red': 'red',
+        brand: '#ffda00',
       },
       padding: {
-        test: '10px',
+        'p-10': '10px',
       },
       margin: {
-        test: '10px',
+        'm-10': '10px',
       },
     },
   },
