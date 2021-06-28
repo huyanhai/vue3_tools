@@ -1,22 +1,33 @@
+const colors = require('tailwindcss/colors');
 module.exports = {
+  // mode: "jit",
   purge: ['./*.html', './src/**/*.vue'],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     extend: {
       colors: {
-        brand: '#ffda00',
+        custom: ({ opacityVariable, opacityValue }) => {
+          if (opacityValue !== undefined) {
+            return `rgba(var(--color-primary), ${opacityValue})`;
+          }
+          if (opacityVariable !== undefined) {
+            return `rgba(var(--color-primary), var(${opacityVariable}, 1))`;
+          }
+          return `rgb(var(--color-primary))`;
+        },
       },
-      padding: {
-        'p-10': '10px',
-      },
-      margin: {
-        'm-10': '10px',
-      },
+    },
+    margin: {
+      sm: '10px',
+    },
+    colors: {
+      ...colors,
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      padding: ['hover'],
+    },
   },
-  prefix: '',
   plugins: [],
 };
