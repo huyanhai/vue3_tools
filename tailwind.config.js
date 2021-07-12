@@ -1,6 +1,8 @@
 const colors = require('tailwindcss/colors');
+const IS_PROD = process.env.NODE_ENV !== 'development';
+
 module.exports = {
-  // mode: "jit",
+  mode: IS_PROD ? '' : 'jit',
   purge: ['./*.html', './src/**/*.vue'],
   darkMode: 'media', // or 'media' or 'class'
   theme: {
